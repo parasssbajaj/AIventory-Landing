@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AIventory - AI Agent Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b0b0f;
+      color: #ffffff;
+      scroll-behavior: smooth;
+    }
+
+    .cta-btn {
+      background: linear-gradient(90deg, #00c3ff, #7f00ff);
+      padding: 15px 30px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(127, 0, 255, 0.3);
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(127, 0, 255, 0.5);
+    }
+
+    header {
+      text-align: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(180deg, #0b0b0f 0%, #111118 100%);
+    }
+
+    header h1 {
+      font-size: 54px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    header p {
+      font-size: 22px;
+      font-weight: 400;
+      color: #cccccc;
+      margin-bottom: 40px;
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .category {
+      background: #18181f;
+      padding: 30px 20px;
+      border-radius: 20px;
+      transition: all 0.4s ease;
+    }
+
+    .category:hover {
+      background: #22222a;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(127, 0, 255, 0.3);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: #0b0b0f;
+      color: #555;
+      font-size: 14px;
+      border-top: 1px solid #222;
+    }
+
+    .social-icons {
+      margin-top: 15px;
+    }
+
+    .social-icons a {
+      color: #888;
+      margin: 0 10px;
+      font-size: 20px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #7f00ff;
+    }
+
+    /* Modal Styling */
+    #aivaModalOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #aivaModalOverlay.active {
+      display: flex;
+    }
+
+    #aivaModalBox {
+      background: #18181f;
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(127, 0, 255, 0.3);
+      color: white;
+    }
+  
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .category {
+      background: #18181f;
+      padding: 30px 20px;
+      border-radius: 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category:hover {
+      background: #22222a;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(127, 0, 255, 0.3);
+    }
+
+    .icon {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+</style>
+
+    <style>
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+      }
+
+      .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .cta-btn {
+        animation: glowpulse 3s ease-in-out infinite;
+      }
+
+      @keyframes glowpulse {
+        0%, 100% {
+          box-shadow: 0 0 15px rgba(127, 0, 255, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(0, 195, 255, 0.6);
+        }
+      }
+
+      section {
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        margin-bottom: 40px;
+        padding-bottom: 60px;
+      }
+
+      section:last-of-type {
+        border-bottom: none;
+      }
+    
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .category {
+      background: #18181f;
+      padding: 30px 20px;
+      border-radius: 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category:hover {
+      background: #22222a;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(127, 0, 255, 0.3);
+    }
+
+    .icon {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+</style>
+    
+    <style>
+      body {
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Particle canvas */
+      #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      header, section {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Gradient line divider */
+      section:not(:last-of-type)::after {
+        content: '';
+        display: block;
+        height: 1px;
+        width: 100%;
+        background: linear-gradient(to right, transparent, rgba(127,0,255,0.5), transparent);
+        margin-top: 60px;
+      }
+
+      /* Cursor glow effect */
+      .glow-cursor {
+        position: fixed;
+        width: 24px;
+        height: 24px;
+        margin-left: -12px;
+        margin-top: -12px;
+        border-radius: 50%;
+        pointer-events: none;
+        background: radial-gradient(circle, rgba(127,0,255,0.5) 0%, rgba(0,0,0,0) 70%);
+        z-index: 10000;
+        transition: transform 0.05s ease-out;
+      }
+    
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .category {
+      background: #18181f;
+      padding: 30px 20px;
+      border-radius: 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category:hover {
+      background: #22222a;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(127, 0, 255, 0.3);
+    }
+
+    .icon {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    </head>
+    
+    
+
+    
+    <body>
+    <div id="particles-js"></div>
+    <div class="glow-cursor" id="glowCursor"></div>
+    <script>
+      // Particle.js config
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 40 },
+          size: { value: 2 },
+          color: { value: "#ffffff" },
+          opacity: { value: 0.2 },
+          move: { speed: 0.6 }
+        },
+        interactivity: {
+          events: {
+            onhover: { enable: false },
+            onclick: { enable: false }
+          }
+        }
+      });
+
+      // Cursor glow logic
+      const cursor = document.getElementById("glowCursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      });
+    </script>
+    
+    <script>
+      // Fade-in on scroll
+      document.addEventListener("DOMContentLoaded", function () {
+        const faders = document.querySelectorAll("section, header");
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        faders.forEach(section => {
+          section.classList.add("fade-in-up");
+          observer.observe(section);
+        });
+      });
+    </script>
+    
+
+<!-- Hero Section -->
+<header>
+  <h1>Plug, play, and scale with AI.</h1>
+  <p>Discover AI Agents ready to automate sales, support, ops, and more — so you can focus on what matters.</p>
+  <a href="#categories" class="cta-btn">Explore AIventory</a>
+</header>
+
+<!-- AIVA Concierge -->
+
+    <!-- Teaser Section -->
+    <section id="teaser" style="position: relative; padding: 0;">
+      <div style="position: relative; overflow: hidden; height: 60vh;">
+        <video autoplay muted loop playsinline style="object-fit: cover; width: 100%; height: 100%; filter: brightness(0.4);">
+          <source src="https://www.videvo.net/videvo_files/converted/2016_11/preview/160929_02_Human_Interface_4k_003.mp447839.webm" type="video/webm">
+        </video>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+          <h2 style="color: white; font-size: 32px;">This is what automation looks like.</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- Countdown Strip -->
+        <section id="aiva">
+
+  <h2>Meet AIVA — Your Smart AI Concierge</h2>
+  <p>AIVA is your intelligent assistant for discovering the right AI Agents for your business. From lead gen to support, AIVA helps you plug, play, and scale with precision.</p>
+  <p style="color: #ccc; font-size: 16px; margin-top: 20px;"><strong>Launching Soon — Be the first to experience it.</strong></p>
+  
+</section>
+
+<!-- Agent Categories -->
+
+<section id="categories">
+  <h2>Discover AI Agent Categories</h2>
+  <div class="categories">
+    <div class="category"><span class="icon">⚙️</span> Operations</div>
+    <div class="category"><span class="icon">📈</span> Marketing</div>
+    <div class="category"><span class="icon">🛎️</span> Customer Support</div>
+    <div class="category"><span class="icon">💬</span> Sales</div>
+    <div class="category"><span class="icon">💳</span> Finance</div>
+    <div class="category"><span class="icon">✨</span> Custom Agents</div>
+  </div>
+</section>
+
+<section id="featured">
+  <h2>Featured AI Agents (Coming Soon)</h2>
+  <div class="categories">
+    <div class="category"><span class="icon">🧠</span> Support Agent</div>
+    <div class="category"><span class="icon">🚀</span> Sales Booster Agent</div>
+    <div class="category"><span class="icon">📥</span> Smart Inbox Agent</div>
+  </div>
+</section>
+
+  <h2>Discover AI Agent Categories</h2>
+  <div class="categories">
+    <div class="category">Sales</div>
+    <div class="category">Marketing</div>
+    <div class="category">Customer Support</div>
+    <div class="category">Finance</div>
+    <div class="category">Operations</div>
+    <div class="category">Custom Agents</div>
+  </div>
+</section>
+
+<!-- Featured Agents -->
+<section id="featured">
+  <h2>Featured AI Agents (Coming Soon)</h2>
+  <div class="categories">
+    <div class="category">Support Agent</div>
+    <div class="category">Sales Booster Agent</div>
+    <div class="category">Smart Inbox Agent</div>
+  </div>
+</section>
+
+<!-- Creator CTA -->
+<section id="creator">
+  <h2>Creators, Get Featured</h2>
+  <p>Built something powerful? List your agent and reach founders globally.</p>
+  <a href="https://docs.google.com/forms/d/18u0nvwtF_SL-ZlhATSWHrdbhXBoLV3tckfFvE_vxlUo/viewform" class="cta-btn">Apply to List Your Agent</a>
+</section>
+
+<!-- Waitlist Section -->
+<section id="waitlist">
+  <h2>Be Among the First 100 Founders</h2>
+  <p>We’re manually onboarding early adopters to help shape the future of automation.</p>
+  <a href="https://docs.google.com/forms/d/1BTGDbYi0Wz3E9-Mky6FKmRUoUWfbDrtYkcjMr4ajv2A/viewform" class="cta-btn">Join the Waitlist</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 AIventory. Built with vision.</p>
+  <div class="social-icons">
+    <a href="https://www.instagram.com/aiventory" target="_blank">Instagram</a> |
+    <a href="https://www.linkedin.com/company/ai-ventory/" target="_blank">LinkedIn</a> |
+    <a href="https://x.com/aiventory" target="_blank">X (Twitter)</a>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div id="aivaModalOverlay">
+  <div id="aivaModalBox">
+    <h3>AIVA is launching soon</h3>
+    <p>We’re finalizing the experience. Be the first to try it when it goes live.</p>
+    <a href="https://docs.google.com/forms/d/1BTGDbYi0Wz3E9-Mky6FKmRUoUWfbDrtYkcjMr4ajv2A/viewform" target="_blank" class="cta-btn">Notify Me</a><br><br>
+    <a href="#" onclick="toggleAivaPopup()" style="color: #888; font-size: 14px; text-decoration: underline;">Close</a>
+  </div>
+</div>
+
+<script>
+  function toggleAivaPopup() {
+    const modal = document.getElementById("aivaModalOverlay");
+    modal.classList.toggle("active");
+  }
+</script>
+
+</body>
+</html>
